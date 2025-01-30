@@ -20,26 +20,24 @@ Here is a simple Bash script to install all of them, assuming you've downloaded 
     SR_LIB=$(python -c "import speech_recognition as sr, os.path as p; print(p.dirname(sr.__file__))")
     sudo apt-get install --yes unzip
     sudo unzip -o fr-FR.zip -d "$SR_LIB"
-    sudo chmod --recursive a+r "$SR_LIB/fr-FR/"
+    sudo chmod --recursive a+r "$SR_LIB/pocketsphinx-data/fr-FR/"
     sudo unzip -o zh-CN.zip -d "$SR_LIB"
-    sudo chmod --recursive a+r "$SR_LIB/zh-CN/"
+    sudo chmod --recursive a+r "$SR_LIB/pocketsphinx-data/zh-CN/"
     sudo unzip -o it-IT.zip -d "$SR_LIB"
-    sudo chmod --recursive a+r "$SR_LIB/it-IT/"
+    sudo chmod --recursive a+r "$SR_LIB/pocketsphinx-data/it-IT/"
 
 Once installed, you can simply specify the language using the ``language`` parameter of ``recognizer_instance.recognize_sphinx``. For example, French would be specified with ``"fr-FR"`` and Mandarin with ``"zh-CN"``.
 
 Building PocketSphinx-Python from source
 ----------------------------------------
 
-For Windows, it is recommended to install the precompiled Wheel packages in the ``third-party`` directory. These are provided because building Pocketsphinx on Windows requires a lot of work, and can take hours to download and install all the surrounding software.
-
 For Linux and other POSIX systems (like OS X), you'll want to build from source. It should take less than two minutes on a fast machine.
 
 * On any Debian-derived Linux distributions (like Ubuntu and Mint):
-    1. Run ``sudo apt-get install python python-all-dev python-pip build-essential swig git libpulse-dev libasound2-dev`` for Python 2, or ``sudo apt-get install python3 python3-all-dev python3-pip build-essential swig git libpulse-dev libasound2-dev`` for Python 3.
-    2. Run ``pip install pocketsphinx`` for Python 2, or ``pip3 install pocketsphinx`` for Python 3.
+    1. Run ``sudo apt-get install python3 python3-all-dev python3-pip build-essential swig git libpulse-dev libasound2-dev`` for Python 3.
+    2. Run ``pip3 install pocketsphinx`` for Python 3.
 * On OS X:
-    1. Run ``brew install swig git python`` for Python 2, or ``brew install swig git python3`` for Python 3.
+    1. Run ``brew install swig git python3`` for Python 3.
     2. Install PocketSphinx-Python using Pip: ``pip install pocketsphinx``.
         * If this gives errors when importing the library in your program, try running ``brew link --overwrite python``.
 * On other POSIX-based systems:
@@ -47,17 +45,12 @@ For Linux and other POSIX systems (like OS X), you'll want to build from source.
     2. Install PocketSphinx-Python using Pip: ``pip install pocketsphinx``.
 * On Windows:
     1. Install `Python <https://www.python.org/downloads/>`__, `Pip <https://pip.pypa.io/en/stable/installing/>`__, `SWIG <http://www.swig.org/download.html>`__, and `Git <https://git-scm.com/downloads>`__, preferably using a package manager.
-    2. Install the necessary `compilers suite <http://blog.ionelmc.ro/2014/12/21/compiling-python-extensions-on-windows/>`__ (`here's a PDF version <https://github.com/Uberi/speech_recognition/blob/master/third-party/Compiling%20Python%20extensions%20on%20Windows.pdf>`__ in case the link goes down) for compiling modules for your particular Python version:
-        * `Microsoft Visual C++ Compiler for Python 2.7 <http://www.microsoft.com/en-us/download/details.aspx?id=44266>`__ for Python 2.7.
-        * `Visual Studio 2015 Community Edition <https://www.visualstudio.com/downloads/download-visual-studio-vs>`__ for Python 3.5.
-        * The installation process for Python 3.4 is outlined in the article above.
-    3. Add the folders containing the Python, SWIG, and Git binaries to your ``PATH`` environment variable.
+    2. Add the folders containing the Python, SWIG, and Git binaries to your ``PATH`` environment variable.
         * My ``PATH`` environment variable looks something like: ``C:\Users\Anthony\Desktop\swigwin-3.0.8;C:\Program Files\Git\cmd;(A BUNCH OF OTHER PATHS)``.
-    4. Reboot to apply changes.
-    5. Download the full PocketSphinx-Python source code by running ``git clone --recursive --depth 1 https://github.com/cmusphinx/pocketsphinx-python`` (downloading the ZIP archive from GitHub will not work).
-    6. Run ``python setup.py install`` in the PocketSphinx-Python source code folder to compile and install PocketSphinx.
-    7. Side note: when I build the precompiled Wheel packages, I skip steps 5 and 6 and do the following instead:
-        * For Python 2.7: ``C:\Python27\python.exe setup.py bdist_wheel``.
+    3. Reboot to apply changes.
+    4. Download the full PocketSphinx-Python source code by running ``git clone --recursive --depth 1 https://github.com/cmusphinx/pocketsphinx-python`` (downloading the ZIP archive from GitHub will not work).
+    5. Run ``python setup.py install`` in the PocketSphinx-Python source code folder to compile and install PocketSphinx.
+    6. Side note: when I build the precompiled Wheel packages, I skip steps 5 and 6 and do the following instead:
         * For Python 3.4: ``C:\Python34\python.exe setup.py bdist_wheel``.
         * For Python 3.5: ``C:\Users\Anthony\AppData\Local\Programs\Python\Python35\python.exe setup.py bdist_wheel``.
         * The resulting packages are located in the ``dist`` folder of the PocketSphinx-Python project directory.
